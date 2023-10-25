@@ -7,10 +7,22 @@ function Node(data) {
 }
 
 function Tree(arr) {
-  const root = buildTree(arr);
+  const mainArr = mergeSort(removeDuplicate(arr));
+  const end = mainArr.length;
+  const root = buildTree(mainArr, 0, end - 1);
+  return root;
 }
 
-function buildTree(arr) {}
+function buildTree(arr, start, end) {
+  if (start > end) {
+    return null;
+  }
+  const mid = Math.floor((start + end) / 2);
+  const root = Node(arr[mid]);
+  root.left = buildTree(arr, start, mid - 1);
+  root.right = buildTree(arr, mid + 1, end);
+  return root;
+}
 
 function removeDuplicate(arr) {
   const uniqueArr = [...new Set(arr)];
@@ -51,4 +63,6 @@ function mergeSort(array) {
   }
 }
 
-
+console.log(Tree([2, 1, 5, 3]));
+console.log(Tree([2, 1, 1, 5, 3]));
+console.log(Tree([2,1,5, 7, 6, 4,3]));
