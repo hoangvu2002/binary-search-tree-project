@@ -64,22 +64,26 @@ function mergeSort(array) {
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
-    if (node === null) {
-      return;
-    }
-    if (node.right !== null) {
-      prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
-    }
-    console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
-    if (node.left !== null) {
-      prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
-    }
-  };
+  if (node === null) {
+    return;
+  }
+  if (node.right !== null) {
+    prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
+  }
+  console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
+  if (node.left !== null) {
+    prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
+  }
+};
 
 function insert(root, data) {
-  if (root===null) {
+  if (checkValue(root, data)) {
+    return;
+  }
+
+  if (root === null) {
     root = Node(data);
-  } 
+  }
 
   if (data < root.data) {
     root.left = insert(root.left, data);
@@ -100,20 +104,18 @@ function checkValue(root, val) {
   }
   if (checkValue(root.left, val)) {
     return true;
-  };
+  }
   if (checkValue(root.right, val)) {
     return true;
-  };
+  }
 
   return false;
 }
 
-
-
 console.log(Tree([2, 1, 5, 3]));
 console.log(Tree([2, 1, 1, 5, 3]));
-console.log(Tree([2,1,5, 7, 6, 4,3]));
-prettyPrint(Tree([2,1,5, 7, 6, 4,3]));
+console.log(Tree([2, 1, 5, 7, 6, 4, 3]));
+prettyPrint(Tree([2, 1, 5, 7, 6, 4, 3]));
 prettyPrint(Tree([2, 1, 1, 5, 3]));
 const tree = Tree([2, 1, 5, 3, 7]);
 prettyPrint(tree);
@@ -121,3 +123,7 @@ insert(tree, 8);
 prettyPrint(tree);
 console.log(checkValue(tree, 8));
 console.log(checkValue(tree, 9));
+insert(tree, 2);
+prettyPrint(tree);
+insert(tree, 9);
+prettyPrint(tree);
