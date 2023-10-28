@@ -76,8 +76,48 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
     }
   };
 
+function insert(root, data) {
+  if (root===null) {
+    root = Node(data);
+  } 
+
+  if (data < root.data) {
+    root.left = insert(root.left, data);
+  } else if (data > root.data) {
+    root.right = insert(root.right, data);
+  }
+
+  return root;
+}
+
+function checkValue(root, val) {
+  if (root === null) {
+    return false;
+  }
+
+  if (root.data === val) {
+    return true;
+  }
+  if (checkValue(root.left, val)) {
+    return true;
+  };
+  if (checkValue(root.right, val)) {
+    return true;
+  };
+
+  return false;
+}
+
+
+
 console.log(Tree([2, 1, 5, 3]));
 console.log(Tree([2, 1, 1, 5, 3]));
 console.log(Tree([2,1,5, 7, 6, 4,3]));
 prettyPrint(Tree([2,1,5, 7, 6, 4,3]));
 prettyPrint(Tree([2, 1, 1, 5, 3]));
+const tree = Tree([2, 1, 5, 3, 7]);
+prettyPrint(tree);
+insert(tree, 8);
+prettyPrint(tree);
+console.log(checkValue(tree, 8));
+console.log(checkValue(tree, 9));
