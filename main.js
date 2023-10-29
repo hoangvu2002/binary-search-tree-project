@@ -161,6 +161,13 @@ function checkValue(root, val) {
   return false;
 }
 
+function find(root, val) {
+  if (checkValue(root, val)) {
+    return Node(val);
+  };
+  return null;
+}
+
 console.log(Tree([2, 1, 5, 3]));
 console.log(Tree([2, 1, 1, 5, 3]));
 console.log(Tree([2, 1, 5, 7, 6, 4, 3]));
@@ -178,3 +185,6 @@ insert(tree, 9);
 prettyPrint(tree);
 deleteVal(tree, 8);
 prettyPrint(tree);
+deleteVal(tree, 3)
+prettyPrint(tree);
+console.log(find(tree, 5));
