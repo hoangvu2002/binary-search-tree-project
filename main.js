@@ -94,6 +94,55 @@ function insert(root, data) {
   return root;
 }
 
+function deleteVal(root, val) {
+
+  //base case
+  if (root===null) {
+    return root;
+  }
+
+  // Recursive calls for ancestors of the node to be deleted
+  if (val < root.data) {
+    root.left = deleteVal(root.left, val);
+    return root;
+  } else if (val > root.data) {
+    root.right = deleteVal(root.right, val);
+    return root;
+  }
+
+  // We reach here when root is the node to be deleted.
+
+  // If one of the children is empty
+
+  if (root.left === null) {
+    return root.right;
+  } else if (root.right === null) {
+    return root.left;
+  }
+
+  // If both children exist
+  let succParent = root;
+
+  // Find successor
+  let succ = root.right;
+  while (succ.left !== null) {
+    succParent = succ;
+    succ = succ.left;
+  }
+
+  if (succParent !== root) {
+    succParent.left = succ.right;
+  } else {
+    succParent.right = succ.right;
+  }
+
+    // Copy Successor Data to root
+    root.data = succ.data;
+
+    // Delete the Successor node and return root
+    return root;
+}
+
 function checkValue(root, val) {
   if (root === null) {
     return false;
@@ -126,4 +175,6 @@ console.log(checkValue(tree, 9));
 insert(tree, 2);
 prettyPrint(tree);
 insert(tree, 9);
+prettyPrint(tree);
+deleteVal(tree, 8);
 prettyPrint(tree);
