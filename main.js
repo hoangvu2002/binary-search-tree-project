@@ -168,6 +168,34 @@ function find(root, val) {
   return null;
 }
 
+function levelOrder(root, callback=null) {
+  if (root===null) return;
+  const queue = [];
+  queue.push(root);
+  returnArray = [];
+
+  
+  while (queue.length > 0) {
+    const current = queue.shift();
+    if (callback) {
+      callback(current);
+    }
+    returnArray.push(current.data);
+
+    if (current.left!==null) {
+      queue.push(current.left);
+    }
+
+    if (current.right!==null) {
+      queue.push(current.right);
+    }
+  }
+
+  if (!callback) {
+    return returnArray;
+  }
+}
+
 console.log(Tree([2, 1, 5, 3]));
 console.log(Tree([2, 1, 1, 5, 3]));
 console.log(Tree([2, 1, 5, 7, 6, 4, 3]));
@@ -188,3 +216,6 @@ prettyPrint(tree);
 deleteVal(tree, 3)
 prettyPrint(tree);
 console.log(find(tree, 5));
+levelOrder(tree, (current) => {console.log(current.data)});
+prettyPrint(tree);
+console.log(levelOrder(tree));
