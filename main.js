@@ -196,28 +196,19 @@ function levelOrder(root, callback=null) {
   }
 }
 
-function bfsRecursive(node) {
-    if (node === null) {
-        return;
+function levelOrderRecursive(root, callback=null) {
+    const returnArray = [];
+    const rootHeight = height(root);
+    for (let i=1; i<=rootHeight; i++) {
+      if (!callback) {
+        printCurrentLevel(root, i, returnArray);
+      }
+      else {
+        printCurrentLevel(root, i, returnArray, callback);
+      };
     }
-
-    const queue = [node];
-
-    while (queue.length > 0) {
-        const current = queue.shift();
-        console.log(current.data); // Process the current node
-
-        if (current.left) {
-            queue.push(current.left);
-        }
-        if (current.right) {
-            queue.push(current.right);
-        }
-
-        // Process child nodes
-        if (queue.length > 0) {
-            bfsRecursive(queue[0]); // Recursively call on the next node
-        }
+    if (!callback) {
+      return returnArray;
     }
 }
 
@@ -233,6 +224,24 @@ function height(root) {
   } else {
     return (rheight+1);
   }
+}
+
+function printCurrentLevel(root, level, returnArray, callback) {
+  if (level===null) {
+    return;
+  }
+  if (level===1) {
+    if (root!==null) {
+      if (callback) {
+        callback(root.data);
+      };
+      returnArray.push(root.data);
+    }
+  };
+  if (level>1) {
+    printCurrentLevel(root.left, level-1, returnArray, callback);
+    printCurrentLevel(root.right, level-1, returnArray, callback);
+  };
 }
 
 console.log(Tree([2, 1, 5, 3]));
@@ -258,4 +267,9 @@ console.log(find(tree, 5));
 levelOrder(tree, (current) => {console.log(current.data)});
 prettyPrint(tree);
 console.log(levelOrder(tree));
-console.log(height(tree));
+levelOrderRecursive(tree);
+insert(tree, 0);
+prettyPrint(tree);
+levelOrderRecursive(tree);
+levelOrderRecursive(tree, (data) => {console.log(`${data} callback`)});
+console.log(levelOrderRecursive(tree));
