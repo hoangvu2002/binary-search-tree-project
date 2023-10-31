@@ -196,6 +196,45 @@ function levelOrder(root, callback=null) {
   }
 }
 
+function bfsRecursive(node) {
+    if (node === null) {
+        return;
+    }
+
+    const queue = [node];
+
+    while (queue.length > 0) {
+        const current = queue.shift();
+        console.log(current.data); // Process the current node
+
+        if (current.left) {
+            queue.push(current.left);
+        }
+        if (current.right) {
+            queue.push(current.right);
+        }
+
+        // Process child nodes
+        if (queue.length > 0) {
+            bfsRecursive(queue[0]); // Recursively call on the next node
+        }
+    }
+}
+
+function height(root) {
+  if (root===null) {
+    return 0;
+  }
+
+  const lheight = height(root.left);
+  const rheight = height(root.right);
+  if (lheight > rheight) {
+    return (lheight + 1);
+  } else {
+    return (rheight+1);
+  }
+}
+
 console.log(Tree([2, 1, 5, 3]));
 console.log(Tree([2, 1, 1, 5, 3]));
 console.log(Tree([2, 1, 5, 7, 6, 4, 3]));
@@ -219,3 +258,4 @@ console.log(find(tree, 5));
 levelOrder(tree, (current) => {console.log(current.data)});
 prettyPrint(tree);
 console.log(levelOrder(tree));
+console.log(height(tree));
