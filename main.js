@@ -95,9 +95,8 @@ function insert(root, data) {
 }
 
 function deleteVal(root, val) {
-
   //base case
-  if (root===null) {
+  if (root === null) {
     return root;
   }
 
@@ -136,11 +135,11 @@ function deleteVal(root, val) {
     succParent.right = succ.right;
   }
 
-    // Copy Successor Data to root
-    root.data = succ.data;
+  // Copy Successor Data to root
+  root.data = succ.data;
 
-    // Delete the Successor node and return root
-    return root;
+  // Delete the Successor node and return root
+  return root;
 }
 
 function checkValue(root, val) {
@@ -164,17 +163,16 @@ function checkValue(root, val) {
 function find(root, val) {
   if (checkValue(root, val)) {
     return Node(val);
-  };
+  }
   return null;
 }
 
-function levelOrder(root, callback=null) {
-  if (root===null) return;
+function levelOrder(root, callback = null) {
+  if (root === null) return;
   const queue = [];
   queue.push(root);
   returnArray = [];
 
-  
   while (queue.length > 0) {
     const current = queue.shift();
     if (callback) {
@@ -182,11 +180,11 @@ function levelOrder(root, callback=null) {
     }
     returnArray.push(current.data);
 
-    if (current.left!==null) {
+    if (current.left !== null) {
       queue.push(current.left);
     }
 
-    if (current.right!==null) {
+    if (current.right !== null) {
       queue.push(current.right);
     }
   }
@@ -196,52 +194,72 @@ function levelOrder(root, callback=null) {
   }
 }
 
-function levelOrderRecursive(root, callback=null) {
-    const returnArray = [];
-    const rootHeight = height(root);
-    for (let i=1; i<=rootHeight; i++) {
-      if (!callback) {
-        printCurrentLevel(root, i, returnArray);
-      }
-      else {
-        printCurrentLevel(root, i, returnArray, callback);
-      };
-    }
+function levelOrderRecursive(root, callback = null) {
+  const returnArray = [];
+  const rootHeight = height(root);
+  for (let i = 1; i <= rootHeight; i++) {
     if (!callback) {
-      return returnArray;
+      printCurrentLevel(root, i, returnArray);
+    } else {
+      printCurrentLevel(root, i, returnArray, callback);
     }
+  }
+  if (!callback) {
+    return returnArray;
+  }
 }
 
 function height(root) {
-  if (root===null) {
+  if (root === null) {
     return 0;
   }
 
   const lheight = height(root.left);
   const rheight = height(root.right);
   if (lheight > rheight) {
-    return (lheight + 1);
+    return lheight + 1;
   } else {
-    return (rheight+1);
+    return rheight + 1;
   }
 }
 
 function printCurrentLevel(root, level, returnArray, callback) {
-  if (level===null) {
+  if (level === null) {
     return;
   }
-  if (level===1) {
-    if (root!==null) {
+  if (level === 1) {
+    if (root !== null) {
       if (callback) {
         callback(root.data);
-      };
+      }
       returnArray.push(root.data);
     }
-  };
-  if (level>1) {
-    printCurrentLevel(root.left, level-1, returnArray, callback);
-    printCurrentLevel(root.right, level-1, returnArray, callback);
-  };
+  }
+  if (level > 1) {
+    printCurrentLevel(root.left, level - 1, returnArray, callback);
+    printCurrentLevel(root.right, level - 1, returnArray, callback);
+  }
+}
+
+function inOrder(root, callback = null) {
+  const returnArray = [];
+  if (root === null) {
+    return [];
+  }
+
+  returnArray.push(root.data);
+
+  if (!callback) {
+    return [
+      ...inOrder(root.left, callback),
+      ...returnArray,
+      ...inOrder(root.right, callback),
+    ];
+  } else {
+    inOrder(root.left, callback);
+    callback(root.data);
+    inOrder(root.right, callback);
+  }
 }
 
 console.log(Tree([2, 1, 5, 3]));
@@ -261,15 +279,23 @@ insert(tree, 9);
 prettyPrint(tree);
 deleteVal(tree, 8);
 prettyPrint(tree);
-deleteVal(tree, 3)
+deleteVal(tree, 3);
 prettyPrint(tree);
 console.log(find(tree, 5));
-levelOrder(tree, (current) => {console.log(current.data)});
+levelOrder(tree, (current) => {
+  console.log(current.data);
+});
 prettyPrint(tree);
 console.log(levelOrder(tree));
 levelOrderRecursive(tree);
 insert(tree, 0);
 prettyPrint(tree);
 levelOrderRecursive(tree);
-levelOrderRecursive(tree, (data) => {console.log(`${data} callback`)});
+levelOrderRecursive(tree, (data) => {
+  console.log(`${data} callback`);
+});
 console.log(levelOrderRecursive(tree));
+inOrder(tree, console.log);
+console.log("?");
+console.log(inOrder(tree));
+inOrder(tree, console.log);
