@@ -283,6 +283,27 @@ function preOrder(root, callback = null) {
   }
 }
 
+function postOrder(root, callback = null) {
+  const returnArray = [];
+  if (root === null) {
+    return [];
+  }
+
+  returnArray.push(root.data);
+
+  if (!callback) {
+    return [
+      ...postOrder(root.left, callback),
+      ...postOrder(root.right, callback),
+      ...returnArray,
+    ];
+  } else {
+    postOrder(root.left, callback);
+    postOrder(root.right, callback);
+    callback(root.data);
+  }
+}
+
 console.log(Tree([2, 1, 5, 3]));
 console.log(Tree([2, 1, 1, 5, 3]));
 console.log(Tree([2, 1, 5, 7, 6, 4, 3]));
@@ -323,3 +344,6 @@ inOrder(tree, console.log);
 prettyPrint(tree);
 console.log(preOrder(tree));
 preOrder(tree, console.log);
+prettyPrint(tree);
+console.log(postOrder(tree));
+postOrder(tree, console.log);
