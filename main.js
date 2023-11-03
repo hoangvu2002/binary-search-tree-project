@@ -304,6 +304,18 @@ function postOrder(root, callback = null) {
   }
 }
 
+function depth(root, val, dist = 0) {
+  if (root === null) {
+    return -1;
+  }
+  if (root.data === val) {
+    return dist;
+  }
+  const leftHeight = depth(root.left, val, dist + 1);
+  const rightHeight = depth(root.right, val, dist + 1);
+  return Math.max(leftHeight, rightHeight);
+}
+
 console.log(Tree([2, 1, 5, 3]));
 console.log(Tree([2, 1, 1, 5, 3]));
 console.log(Tree([2, 1, 5, 7, 6, 4, 3]));
@@ -347,3 +359,10 @@ preOrder(tree, console.log);
 prettyPrint(tree);
 console.log(postOrder(tree));
 postOrder(tree, console.log);
+prettyPrint(tree);
+//console.log(height(tree, 0));
+//console.log(height(tree, 1));
+//console.log(height(tree, 5));
+console.log(depth(tree, 7));
+console.log(depth(tree, 9));
+console.log(depth(tree,-1));
