@@ -83,6 +83,7 @@ function insert(root, data) {
 
   if (root === null) {
     root = Node(data);
+    return root;
   }
 
   if (data < root.data) {
@@ -316,6 +317,35 @@ function depth(root, val, dist = 0) {
   return Math.max(leftHeight, rightHeight);
 }
 
+function nodeHeight(root, val, height=0) {
+  if (root===null) {
+    return -1;
+  }
+  
+  if (root.left===null&&root.right===null) {
+    console.log("fuck");
+    return 0;
+  };
+
+
+  if (root.data === val) {
+    const leftHeight = nodeHeight(root.left, val, height+1);
+    const rightHeight = nodeHeight(root.right, val, height+1);
+    
+    let ans = Math.max(leftHeight, rightHeight);
+    return ans;
+  };
+  //if (root.data !== val) {
+  //  height = height + 1;
+  //}
+  
+
+  if (root.left!==null||root.right!==null) {
+    height += 1;
+  };
+  return height;
+}
+
 console.log(Tree([2, 1, 5, 3]));
 console.log(Tree([2, 1, 1, 5, 3]));
 console.log(Tree([2, 1, 5, 7, 6, 4, 3]));
@@ -366,3 +396,4 @@ prettyPrint(tree);
 console.log(depth(tree, 7));
 console.log(depth(tree, 9));
 console.log(depth(tree,-1));
+console.log(nodeHeight(tree, 9));
