@@ -225,7 +225,7 @@ function height(root) {
 }
 
 function printCurrentLevel(root, level, returnArray, callback) {
-  if (level === null) {
+  if (root === null) {
     return;
   }
   if (level === 1) {
