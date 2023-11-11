@@ -337,10 +337,10 @@ function isBalanced(root) {
   if (root===null) {
     return true;
   } 
-  if (Math.abs(height(root.left)-height(root.right))>-2) {
-    return true;
+  if (Math.abs(height(root.left)-height(root.right))>=2) {
+    return false;
   }
-  return false;
+  return true;
 }
 
 console.log(Tree([2, 1, 5, 3]));
@@ -396,4 +396,10 @@ console.log(depth(tree,-1));
 prettyPrint(tree);
 console.log(nodeHeight(tree, 2));
 
+console.log(isBalanced(tree));
+insert(tree, 10);
+prettyPrint(tree);
+console.log(isBalanced(tree));
+insert(tree, 12);
+prettyPrint(tree);
 console.log(isBalanced(tree));
