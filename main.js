@@ -343,6 +343,14 @@ function isBalanced(root) {
   return true;
 }
 
+function rebalance(root) {
+  if (root===null) {
+    return;
+  }
+  const arr = inOrder(root);
+  return Tree(arr);
+}
+
 console.log(Tree([2, 1, 5, 3]));
 console.log(Tree([2, 1, 1, 5, 3]));
 console.log(Tree([2, 1, 5, 7, 6, 4, 3]));
@@ -403,3 +411,6 @@ console.log(isBalanced(tree));
 insert(tree, 12);
 prettyPrint(tree);
 console.log(isBalanced(tree));
+
+const anotherTree = rebalance(tree);
+prettyPrint(anotherTree);
