@@ -317,33 +317,30 @@ function depth(root, val, dist = 0) {
   return Math.max(leftHeight, rightHeight);
 }
 
-function nodeHeight(root, val, height=0) {
+function nodeHeight(root, val) {
   if (root===null) {
     return -1;
   }
+  if (!checkValue(root, val)) {
+    return -1;
+  }
+  if (root.data===val) {
+    return height(root);
+  };
+  const lheight = nodeHeight(root.left, val);
+  const rheight = nodeHeight(root.right, val);
   
-  if (root.left===null&&root.right===null) {
-    console.log("fuck");
-    return 0;
-  };
+  return Math.max(lheight, rheight);
+}
 
-
-  if (root.data === val) {
-    const leftHeight = nodeHeight(root.left, val, height+1);
-    const rightHeight = nodeHeight(root.right, val, height+1);
-    
-    let ans = Math.max(leftHeight, rightHeight);
-    return ans;
-  };
-  //if (root.data !== val) {
-  //  height = height + 1;
-  //}
-  
-
-  if (root.left!==null||root.right!==null) {
-    height += 1;
-  };
-  return height;
+function isBalanced(root) {
+  if (root===null) {
+    return true;
+  } 
+  if (Math.abs(height(root.left)-height(root.right))>-2) {
+    return true;
+  }
+  return false;
 }
 
 console.log(Tree([2, 1, 5, 3]));
@@ -396,4 +393,7 @@ prettyPrint(tree);
 console.log(depth(tree, 7));
 console.log(depth(tree, 9));
 console.log(depth(tree,-1));
-console.log(nodeHeight(tree, 9));
+prettyPrint(tree);
+console.log(nodeHeight(tree, 2));
+
+console.log(isBalanced(tree));
